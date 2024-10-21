@@ -1,0 +1,36 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+
+    <!-- Bloque de configuración de una Base de Datos MySQL -->
+    <persistence-unit name="unidadMySQL" transaction-type="RESOURCE_LOCAL">
+
+        <class>User</class>
+        <class>Product</class>
+        <class>Supplier</class>
+
+        <properties>
+            <!-- Driver -->
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
+
+            <!-- URL -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/pruebabd" />
+
+            <!-- User -->
+            <property name="jakarta.persistence.jdbc.user" value="root" />
+
+            <!-- Password -->
+            <property name="jakarta.persistence.jdbc.password" value="" />
+
+            <!-- Dialect -->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+
+            <property name="hibernate.show_sql" value="true" />
+
+            <property name="hibernate.hbm2ddl.auto" value="create" />
+        </properties>
+
+    </persistence-unit>
+
+</persistence>
