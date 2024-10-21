@@ -9,7 +9,7 @@ fun main() {
     // Cargar la configuración que queremos del persistence.xml
     val emf: EntityManagerFactory = Persistence.createEntityManagerFactory("unidadMySQL")
     // Abre la conexión con la base de datos -> em contiene la conexión
-    val em: EntityManager = emf.createEntityManager()
+    var em: EntityManager = emf.createEntityManager()
 
     // Abre la transacción
     em.transaction.begin()
@@ -43,4 +43,42 @@ fun main() {
     // Cierra la conexión con la BD
     em.close()
     emf.close()
+
+
+
+    // JPA - Detached y mas
+    em = emf.createEntityManager()
+
+    // Abre la transacción
+    em.transaction.begin()
+
+    // Este objeto estaría detached
+    val u = User("123", "Juanete")
+
+    // Lo mete en el persistence context
+    em.persist(u)
+
+    // Entra en la BD
+    em.transaction.commit()
+
+    // Abrimos transaccion nueva
+    em.transaction.begin()
+
+    // Buscar
+    val usuarioFromBD = em.find(User::class.java, "Juanete")
+
+    // Cambiamos la contraseña
+    usuarioFromBD.password = "345678"
+
+    // Lo detacheamos y el cambio anterior no se updatea porque no hemos hecho commit
+    em.detach(usuarioFromBD)
+
+    // Esto no se debería updatear en la BD tampoco
+    usuarioFromBD.password = "aaaaaaaa"
+
+    // No cambiará nada
+    em.transaction.commit()
+
+    // Cierra la conexión
+    em.close()
 }
